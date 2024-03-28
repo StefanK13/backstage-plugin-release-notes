@@ -1,0 +1,15 @@
+name: '🐛 Bug Report'
+description: 'Submit a bug report'
+title: '🐛 [BUG]: <title>'
+labels:
+  - bug
+assignees:
+  - StefanK13
+body:
+  - type: textarea
+    id: description
+    validations:
+      required: true
+    attributes:
+      label: 'Description'
+      description: 'A clear and concise description of what the bug is.'

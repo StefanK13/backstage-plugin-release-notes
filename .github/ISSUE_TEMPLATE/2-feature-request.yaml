@@ -1,0 +1,15 @@
+name: '🆕 Feature Request'
+description: 'Submit a feature request'
+title: '🆕 [FEATURE]: <title>'
+labels:
+  - feature
+assignees:
+  - StefanK13
+body:
+  - type: textarea
+    id: description
+    validations:
+      required: true
+    attributes:
+      label: 'Description'
+      description: 'A clear and concise description of what the feature is.'
