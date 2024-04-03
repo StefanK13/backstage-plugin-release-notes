@@ -1,0 +1,26 @@
+import { makeStyles } from '@material-ui/core/styles';
+import { Theme } from '@material-ui/core';
+
+export const useReleaseNoteContentStyles = makeStyles((theme: Theme) => ({
+  menuList: {
+    padding: 0,
+  },
+  menuItem: {
+    minHeight: theme.spacing(6),
+    whiteSpace: 'normal',
+  },
+  listItemIcon: {
+    minWidth: theme.spacing(4),
+  },
+  listItemIconSelected: {
+    color: theme.palette.primary.main,
+  },
+  boxPagination: {
+    display: 'flex',
+    justifyContent: 'center',
+    alignItems: 'center',
+    minHeight: theme.spacing(6),
+  }
+}));
+
+

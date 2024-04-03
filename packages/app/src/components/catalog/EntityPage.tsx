@@ -57,6 +57,7 @@ import {
 
 import { TechDocsAddons } from '@backstage/plugin-techdocs-react';
 import { ReportIssue } from '@backstage/plugin-techdocs-module-addons-contrib';
+import { EntityReleaseNotesContent } from '@stefank13/backstage-plugin-release-notes';
 
 const techdocsContent = (
   <EntityTechdocsContent>
@@ -172,6 +173,10 @@ const serviceEntityPage = (
       </Grid>
     </EntityLayout.Route>
 
+    <EntityLayout.Route path="/release-notes" title="Release Notes">
+      <EntityReleaseNotesContent />
+    </EntityLayout.Route>
+
     <EntityLayout.Route path="/docs" title="Docs">
       {techdocsContent}
     </EntityLayout.Route>
@@ -199,6 +204,10 @@ const websiteEntityPage = (
       </Grid>
     </EntityLayout.Route>
 
+    <EntityLayout.Route path="/release-notes" title="Release Notes">
+      <EntityReleaseNotesContent />
+    </EntityLayout.Route>
+
     <EntityLayout.Route path="/docs" title="Docs">
       {techdocsContent}
     </EntityLayout.Route>
@@ -216,6 +225,10 @@ const defaultEntityPage = (
   <EntityLayout>
     <EntityLayout.Route path="/" title="Overview">
       {overviewContent}
+    </EntityLayout.Route>
+
+    <EntityLayout.Route path="/release-notes" title="Release Notes">
+      <EntityReleaseNotesContent />
     </EntityLayout.Route>
 
     <EntityLayout.Route path="/docs" title="Docs">
