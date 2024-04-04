@@ -1,11 +1,11 @@
 import React from 'react';
 import { createDevApp } from '@backstage/dev-utils';
-import { releaseNotesPlugin, ReleaseNotesPage } from '../src/plugin';
+import { releaseNotesPlugin, EntityReleaseNotesContent } from '../src/plugin';
 
 createDevApp()
   .registerPlugin(releaseNotesPlugin)
   .addPage({
-    element: <ReleaseNotesPage />,
+    element: <EntityReleaseNotesContent />,
     title: 'Root Page',
     path: '/release-notes',
   })

@@ -16,7 +16,9 @@ export const EntityReleaseNotesContent = releaseNotesPlugin.provide(
   createRoutableExtension({
     name: 'EntityReleaseNotesContent',
     component: () =>
-      import('./components/ReleaseNotesContent').then(m => m.ReleaseNotesContent),
+      import('./components/ReleaseNotesContent').then(
+        m => m.ReleaseNotesContent,
+      ),
     mountPoint: rootRouteRef,
   }),
 );

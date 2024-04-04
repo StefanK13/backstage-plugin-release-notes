@@ -20,7 +20,5 @@ export const useReleaseNoteContentStyles = makeStyles((theme: Theme) => ({
     justifyContent: 'center',
     alignItems: 'center',
     minHeight: theme.spacing(6),
-  }
+  },
 }));
-
-
