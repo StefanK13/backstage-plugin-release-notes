@@ -1,6 +1,10 @@
+import { releaseNotesApiRef, ReleaseNotesClient } from './api';
 import {
+  createApiFactory,
   createPlugin,
   createRoutableExtension,
+  discoveryApiRef,
+  fetchApiRef,
 } from '@backstage/core-plugin-api';
 
 import { rootRouteRef } from './routes';
@@ -10,6 +14,17 @@ export const releaseNotesPlugin = createPlugin({
   routes: {
     root: rootRouteRef,
   },
+  apis: [
+    createApiFactory({
+      api: releaseNotesApiRef,
+      deps: {
+        discoveryApi: discoveryApiRef,
+        fetchApi: fetchApiRef,
+      },
+      factory: ({ discoveryApi, fetchApi }) =>
+        new ReleaseNotesClient({ discoveryApi, fetchApi }),
+    }),
+  ],
 });
 
 export const EntityReleaseNotesContent = releaseNotesPlugin.provide(

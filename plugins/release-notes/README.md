@@ -1,13 +1,78 @@
-# release-notes
+# Release Notes plugin for Backstage
 
-Welcome to the release-notes plugin!
+## Overview
 
-_This plugin was created through the Backstage CLI_
+The Release Notes plugin is a frontend plugin that displays all your releases for a component. It uses the GitLab API to retrieve all releases from the associated repository.
 
-## Getting started
+> **_NOTE:_** This plugin currently only works for GitLab (Support for GitHub will be added in the future).
 
-Your plugin has been added to the example app in this repository, meaning you'll be able to access it by running `yarn start` in the root directory, and then navigating to [/release-notes](http://localhost:3000/release-notes).
+![Release Notes](./docs/release-notes-content.png)
 
-You can also serve the plugin in isolation by running `yarn start` in the plugin directory.
-This method of serving the plugin provides quicker iteration speed and a faster startup and hot reloads.
-It is only meant for local development, and the setup for it can be found inside the [/dev](./dev) directory.
+## Installation Steps
+
+1. Add the plugin to you frontend app by running the following command from your Backstage root directory:
+
+```shell
+yarn add --cwd packages/app @stefank13/backstage-plugin-release-notes
+```
+
+2. In the `app-config.yaml` file in the Backstage root directory, add the new proxy config:
+
+```yaml
+proxy:
+  '/gitlab':
+    target: 'https://gitlab.com/api/v4'
+    allowedHeaders: ['x-total-pages']
+    headers:
+      Authorization: 'Bearer ${GITLAB_TOKEN}'
+```
+
+3. Create a new group access token with the permission `read_api` (https://docs.gitlab.com/ee/user/group/settings/group_access_tokens) and provide it as `GITLAB_TOKEN` as env variable.
+
+4. Import and add `ReleaseNotesContent` to `packages/app/src/components/catalog/EntityPage.tsx` for all the entity pages you want the Release Notes to be in:
+
+   ```typescript jsx
+   import { EntityReleaseNotesContent } from '@stefank13/backstage-plugin-release-notes';
+
+   //...
+
+   const serviceEntityPage = (
+     <EntityLayout>
+       //...
+       <EntityLayout.Route path="/release-notes" title="Release Notes">
+         <EntityReleaseNotesContent />
+       </EntityLayout.Route>
+       //...
+     </EntityLayout>
+   );
+
+   const websiteEntityPage = (
+     <EntityLayout>
+       //...
+       <EntityLayout.Route path="/release-notes" title="Release Notes">
+         <EntityReleaseNotesContent />
+       </EntityLayout.Route>
+       //...
+     </EntityLayout>
+   );
+
+   const defaultEntityPage = (
+     <EntityLayout>
+       //...
+       <EntityLayout.Route path="/release-notes" title="Release Notes">
+         <EntityReleaseNotesContent />
+       </EntityLayout.Route>
+       //...
+     </EntityLayout>
+   );
+   ```
+
+## Usage
+
+Add the following annotation to the `catalog-info.yaml` for an entity you want to display the Release Notes for:
+
+```yaml
+metadata:
+  annotations:
+    gitlab.com/project-slug: 'project-slug' #group_name/project_name
+```
