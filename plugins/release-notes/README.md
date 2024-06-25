@@ -1,4 +1,4 @@
-# Release Notes plugin for Backstage
+# Release Notes plugin for [Backstage](https://backstage.io)
 
 ## Overview
 
@@ -13,7 +13,7 @@ The Release Notes plugin is a frontend plugin that displays all your releases fo
 1. Add the plugin to you frontend app by running the following command from your Backstage root directory:
 
 ```shell
-yarn add --cwd packages/app @stefank13/backstage-plugin-release-notes
+yarn --cwd packages/app add @stefank13/backstage-plugin-release-notes
 ```
 
 2. In the `app-config.yaml` file in the Backstage root directory, add the new proxy config:
@@ -27,9 +27,17 @@ proxy:
       Authorization: 'Bearer ${GITLAB_TOKEN}'
 ```
 
-3. Create a new group access token with the permission `read_api` (https://docs.gitlab.com/ee/user/group/settings/group_access_tokens) and provide it as `GITLAB_TOKEN` as env variable.
+3. Also in the `app-config.yaml` file in the Backstage root directory, add the exposed header to the backend cors config:
 
-4. Import and add `ReleaseNotesContent` to `packages/app/src/components/catalog/EntityPage.tsx` for all the entity pages you want the Release Notes to be in:
+```yaml
+backend:
+  cors:
+    exposedHeaders: ['x-total-pages']
+```
+
+4. Create a new group access token with the permission `read_api` (https://docs.gitlab.com/ee/user/group/settings/group_access_tokens) and provide it as `GITLAB_TOKEN` as env variable.
+
+5. Import and add `ReleaseNotesContent` to `packages/app/src/components/catalog/EntityPage.tsx` for all the entity pages you want the Release Notes to be in:
 
    ```typescript jsx
    import { EntityReleaseNotesContent } from '@stefank13/backstage-plugin-release-notes';
