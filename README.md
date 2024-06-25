@@ -1,10 +1,7 @@
-# [Backstage](https://backstage.io)
+# Release Notes plugin for [Backstage](https://backstage.io)
 
-This is your newly scaffolded Backstage App, Good Luck!
+## Overview
 
-To start the app, run:
+The Release Notes plugin is a plugin that displays all your releases for a component. The installation of this plugin can be found in the [README](./plugins/release-notes/README.md) of the plugin.
 
-```sh
-yarn install
-yarn dev
-```
+![Release Notes](./plugins/release-notes/docs/release-notes-content.png)
