@@ -26,6 +26,7 @@ import { HomePageSearchBar } from '@backstage/plugin-search';
 import { SearchContextProvider } from '@backstage/plugin-search-react';
 import { Grid, makeStyles } from '@material-ui/core';
 import { HomePageReleaseNotesCard } from '@stefank13/backstage-plugin-release-notes';
+import { HomePageRecentlyVisited } from '@backstage/plugin-home';
 import React from 'react';
 
 const useStyles = makeStyles(theme => ({
@@ -80,7 +81,16 @@ export const HomePage = () => {
             </Grid>
             <Grid container item xs={12}>
               <Grid item xs={12} md={6}>
+                <HomePageReleaseNotesCard
+                  projectSlug="vodafoneziggodi/cockpit/cockpit"
+                  title="Backstage Instance Releases"
+                />
+              </Grid>
+              <Grid item xs={12} md={6}>
                 <HomePageStarredEntities />
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <HomePageRecentlyVisited />
               </Grid>
               <Grid item xs={12} md={6}>
                 <HomePageToolkit
@@ -89,18 +99,6 @@ export const HomePage = () => {
                     label: 'link',
                     icon: <TemplateBackstageLogoIcon />,
                   })}
-                />
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <InfoCard title="Composable Section">
-                  {/* placeholder for content */}
-                  <div style={{ height: 370 }} />
-                </InfoCard>
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <HomePageReleaseNotesCard
-                  slug="vodafoneziggodi/cockpit/cockpit"
-                  title="Latest Backstage Instance Releases"
                 />
               </Grid>
             </Grid>

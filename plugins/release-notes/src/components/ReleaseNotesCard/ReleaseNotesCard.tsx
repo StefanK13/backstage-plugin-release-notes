@@ -21,18 +21,21 @@ import { useReleaseNotesCardStyles } from './styles';
 import { ReleaseNotesMenu } from '../ReleaseNotesMenu';
 
 type ReleaseNotesCardProps = {
-  slug: string;
+  projectSlug: string;
   title: string;
 };
 
-export const ReleaseNotesCard = ({ slug, title }: ReleaseNotesCardProps) => {
+export const ReleaseNotesCard = ({
+  projectSlug,
+  title,
+}: ReleaseNotesCardProps) => {
   const classes = useReleaseNotesCardStyles();
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [selectedRelease, setSelectedRelease] = useState<Release | null>(null);
   const [openDialog, setOpenDialog] = useState(false);
 
   const { releases, totalPages, loading, error } = useReleases(
-    slug,
+    projectSlug,
     currentPage,
   );
 
