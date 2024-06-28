@@ -1,0 +1,1 @@
+export { ReleaseNotesMenu } from './ReleaseNotesMenu';

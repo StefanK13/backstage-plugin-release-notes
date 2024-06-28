@@ -8,23 +8,13 @@ import {
   Progress,
   ResponseErrorPanel,
 } from '@backstage/core-components';
-import {
-  Box,
-  CircularProgress,
-  Divider,
-  Grid,
-  ListItemIcon,
-  MenuItem,
-  MenuList,
-  Typography,
-} from '@material-ui/core';
-import NewReleases from '@material-ui/icons/NewReleases';
-import { Pagination } from '@material-ui/lab';
-import { useReleaseNoteContentStyles } from './styles';
+import { Grid } from '@material-ui/core';
+import { Alert } from '@material-ui/lab';
 import {
   useEntity,
   MissingAnnotationEmptyState,
 } from '@backstage/plugin-catalog-react';
+import { ReleaseNotesMenu } from '../ReleaseNotesMenu';
 
 const RELEASE_NOTES_ANNOTATION = 'gitlab.com/project-slug';
 
@@ -32,7 +22,6 @@ const isReleaseNotesAvailable = (entity: Entity) =>
   Boolean(entity.metadata.annotations?.[RELEASE_NOTES_ANNOTATION]);
 
 const ReleaseNotes = ({ entity }: { entity: Entity }) => {
-  const classes = useReleaseNoteContentStyles();
   const [currentPage, setCurrentPage] = useState<number>(1);
   const [selectedRelease, setSelectedRelease] = useState<Release | null>(null);
 
@@ -49,57 +38,33 @@ const ReleaseNotes = ({ entity }: { entity: Entity }) => {
     return <ResponseErrorPanel error={error} />;
   }
 
-  if (loading && !selectedRelease) {
+  if (loading && releases.length === 0) {
     return <Progress />;
   }
 
-  return (
-    <Grid container>
-      <Grid item xs={12} md={3}>
-        {selectedRelease && (
-          <InfoCard title="Releases" noPadding>
-            <MenuList className={classes.menuList}>
-              {loading && (
-                <CircularProgress
-                  size="2.5rem"
-                  className={classes.boxCircularProgress}
-                />
-              )}
-              {releases.map(release => {
-                const isSelected =
-                  selectedRelease.tag_name === release.tag_name;
+  if (!loading && releases.length === 0) {
+    return (
+      <Alert severity="info">
+        It seems that there has not been done a release yet, start with your
+        first release to make use of this plugin!
+      </Alert>
+    );
+  }
 
-                return (
-                  <MenuItem
-                    key={release.tag_name}
-                    className={classes.menuItem}
-                    selected={isSelected}
-                    disabled={loading}
-                    onClick={() => setSelectedRelease(release)}
-                  >
-                    <ListItemIcon
-                      className={`
-                      ${classes.listItemIcon} 
-                      ${isSelected && classes.listItemIconSelected}`}
-                    >
-                      <NewReleases />
-                    </ListItemIcon>
-                    <Typography>{release.name}</Typography>
-                  </MenuItem>
-                );
-              })}
-            </MenuList>
-            <Divider />
-            <Box className={classes.boxPagination}>
-              <Pagination
-                count={totalPages}
-                page={currentPage}
-                onChange={(_, page) => setCurrentPage(page)}
-                size="small"
-              />
-            </Box>
-          </InfoCard>
-        )}
+  return (
+    <Grid container spacing={3}>
+      <Grid item xs={12} md={3}>
+        <InfoCard title="Releases" noPadding>
+          <ReleaseNotesMenu
+            isFetchingReleases={loading}
+            releases={releases}
+            selectedRelease={selectedRelease}
+            handleReleaseClick={release => setSelectedRelease(release)}
+            currentPage={currentPage}
+            totalPages={totalPages}
+            handlePageClick={page => setCurrentPage(page)}
+          />
+        </InfoCard>
       </Grid>
       <Grid item xs={12} md={9}>
         {selectedRelease && (

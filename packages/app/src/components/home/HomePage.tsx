@@ -25,6 +25,7 @@ import { Content, Page, InfoCard } from '@backstage/core-components';
 import { HomePageSearchBar } from '@backstage/plugin-search';
 import { SearchContextProvider } from '@backstage/plugin-search-react';
 import { Grid, makeStyles } from '@material-ui/core';
+import { HomePageReleaseNotesCard } from '@stefank13/backstage-plugin-release-notes';
 import React from 'react';
 
 const useStyles = makeStyles(theme => ({
@@ -95,6 +96,12 @@ export const HomePage = () => {
                   {/* placeholder for content */}
                   <div style={{ height: 370 }} />
                 </InfoCard>
+              </Grid>
+              <Grid item xs={12} md={6}>
+                <HomePageReleaseNotesCard
+                  slug="vodafoneziggodi/cockpit/cockpit"
+                  title="Latest Backstage Instance Releases"
+                />
               </Grid>
             </Grid>
           </Grid>
