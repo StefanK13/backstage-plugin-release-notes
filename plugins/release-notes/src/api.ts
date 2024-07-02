@@ -9,6 +9,7 @@ export type Release = {
   name: string;
   tag_name: string;
   description: string;
+  released_at: string;
 };
 
 type ListReleasesResponse = {

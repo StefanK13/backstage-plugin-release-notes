@@ -3,6 +3,7 @@ import {
   Box,
   CircularProgress,
   Divider,
+  ListItemText,
   ListItemIcon,
   MenuItem,
   MenuList,
@@ -45,6 +46,9 @@ export const ReleaseNotesMenu = ({
         )}
         {releases.map(release => {
           const isSelected = selectedRelease?.tag_name === release.tag_name;
+          const releaseDate = new Date(
+            release.released_at,
+          ).toLocaleDateString();
 
           return (
             <MenuItem
@@ -61,7 +65,16 @@ export const ReleaseNotesMenu = ({
               >
                 <NewReleasesIcon />
               </ListItemIcon>
-              <Typography>{release.name}</Typography>
+              <ListItemText
+                className={classes.listItemText}
+                primary={<Typography>{release.name}</Typography>}
+                secondary={
+                  <Typography variant="caption" color="textSecondary">
+                    {releaseDate}
+                  </Typography>
+                }
+                disableTypography
+              />
             </MenuItem>
           );
         })}

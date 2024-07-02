@@ -20,6 +20,11 @@ export const useReleaseNotesMenuStyles = makeStyles((theme: Theme) => ({
   listItemIconSelected: {
     color: theme.palette.primary.main,
   },
+  listItemText: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+  },
   boxPagination: {
     display: 'flex',
     justifyContent: 'center',
