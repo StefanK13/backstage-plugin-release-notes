@@ -10,7 +10,11 @@
     "types": "dist/index.d.ts"
   },
   "backstage": {
-    "role": "frontend-plugin"
+    "role": "frontend-plugin",
+    "pluginId": "release-notes",
+    "pluginPackages": [
+      "@stefank13/backstage-plugin-release-notes"
+    ]
   },
   "sideEffects": false,
   "scripts": {
