@@ -8237,20 +8237,6 @@
   resolved "https://registry.yarnpkg.com/@spotify/prettier-config/-/prettier-config-15.0.0.tgz#3dcc94ffa9c3fad68a1e8430ccba57edc0131399"
   integrity sha512-ex7bdst1STr97y/MUTgVxadxpEZy48XVQDwZrESYO07EONSRstQYBaQWGVo80jmJ9NXC+r4ZjUqjT2Gw524Nqg==
 
-"@stefank13/backstage-plugin-release-notes@^0.0.1":
-  version "0.1.0"
-  dependencies:
-    "@backstage/catalog-model" "^1.5.0"
-    "@backstage/core-components" "^0.14.8"
-    "@backstage/core-plugin-api" "^1.9.3"
-    "@backstage/errors" "^1.2.4"
-    "@backstage/plugin-catalog-react" "^1.12.1"
-    "@backstage/theme" "^0.5.6"
-    "@material-ui/core" "^4.9.13"
-    "@material-ui/icons" "^4.9.1"
-    "@material-ui/lab" "4.0.0-alpha.61"
-    react-use "^17.2.4"
-
 "@stoplight/better-ajv-errors@1.0.3":
   version "1.0.3"
   resolved "https://registry.yarnpkg.com/@stoplight/better-ajv-errors/-/better-ajv-errors-1.0.3.tgz#d74a5c4da5d786c17188d7f4edec505f089885fa"
@@ -10530,7 +10516,7 @@ anymatch@^3.0.3, anymatch@~3.1.2:
     "@backstage/theme" "^0.5.6"
     "@material-ui/core" "^4.12.2"
     "@material-ui/icons" "^4.9.1"
-    "@stefank13/backstage-plugin-release-notes" "^0.0.1"
+    "@stefank13/backstage-plugin-release-notes" "^0.1.0"
     history "^5.0.0"
     react "^18.0.2"
     react-dom "^18.0.2"
