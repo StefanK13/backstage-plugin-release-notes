@@ -1,7 +1,7 @@
 import { makeStyles } from '@material-ui/core/styles';
 import { Theme } from '@material-ui/core';
 
-export const useReleaseNoteContentStyles = makeStyles((theme: Theme) => ({
+export const useReleaseNotesMenuStyles = makeStyles((theme: Theme) => ({
   boxCircularProgress: {
     position: 'absolute',
     left: 'calc(50% - 1.25rem)',
@@ -19,6 +19,11 @@ export const useReleaseNoteContentStyles = makeStyles((theme: Theme) => ({
   },
   listItemIconSelected: {
     color: theme.palette.primary.main,
+  },
+  listItemText: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    alignItems: 'center',
   },
   boxPagination: {
     display: 'flex',

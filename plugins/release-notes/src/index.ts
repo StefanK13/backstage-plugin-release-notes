@@ -1,1 +1,1 @@
-export { EntityReleaseNotesContent } from './plugin';
+export { EntityReleaseNotesContent, HomePageReleaseNotesCard } from './plugin';
