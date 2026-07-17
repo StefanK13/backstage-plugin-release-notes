@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { Release } from '../../api';
 import { Entity } from '@backstage/catalog-model';
 import { useReleases } from '../../hooks/useReleases';

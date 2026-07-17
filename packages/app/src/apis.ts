@@ -1,19 +1,27 @@
 import {
+  ScmAuth,
   ScmIntegrationsApi,
   scmIntegrationsApiRef,
-  ScmAuth,
 } from '@backstage/integration-react';
+import { configApiRef } from '@backstage/core-plugin-api';
 import {
-  AnyApiFactory,
-  configApiRef,
-  createApiFactory,
-} from '@backstage/core-plugin-api';
+  ApiBlueprint,
+  ExtensionDefinition,
+} from '@backstage/frontend-plugin-api';
 
-export const apis: AnyApiFactory[] = [
-  createApiFactory({
-    api: scmIntegrationsApiRef,
-    deps: { configApi: configApiRef },
-    factory: ({ configApi }) => ScmIntegrationsApi.fromConfig(configApi),
-  }),
-  ScmAuth.createDefaultApiFactory(),
-];
+const scmIntegrationsApi = ApiBlueprint.make({
+  name: 'scm-integrations',
+  params: define =>
+    define({
+      api: scmIntegrationsApiRef,
+      deps: { configApi: configApiRef },
+      factory: ({ configApi }) => ScmIntegrationsApi.fromConfig(configApi),
+    }),
+});
+
+const scmAuthApi = ApiBlueprint.make({
+  name: 'scm-auth',
+  params: define => define(ScmAuth.createDefaultApiFactory()),
+});
+
+export const apis: ExtensionDefinition[] = [scmIntegrationsApi, scmAuthApi];

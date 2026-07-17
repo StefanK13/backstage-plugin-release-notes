@@ -1,11 +1,14 @@
 # Release Notes plugin for [Backstage](https://backstage.io)
 
+> [!WARNING] > **Breaking change — v1.0.0 and above requires the New Frontend System.**
+> The plugin now ships as a New Frontend System plugin only and must be used with `@backstage/frontend-defaults` (or any NFS-compatible Backstage app). If you are still on the old frontend system, stay on `v0.1.0`.
+
 ## Overview
 
 The Release Notes plugin is a frontend plugin that offers the following 2 functionalities:
 
 - Shows all your releases for a component.
-- Shows the releases of your Backstage instance on the homepage.
+- Shows the releases of your Backstage instance.
 
 > **_NOTE:_** This plugin currently only works for GitLab (Support for GitHub will be added in the future).
 
@@ -13,7 +16,7 @@ The Release Notes plugin is a frontend plugin that offers the following 2 functi
 
 ![Release Notes](./docs/release-notes-content.png)
 
-**Example of the releases of your Backstage instance on the homepage:**
+**Example of the releases of your Backstage instance:**
 
 ![Release Notes](./docs/release-notes-card.png)
 
@@ -46,87 +49,76 @@ backend:
 
 4. Create a new group access token with the permission `read_api` (https://docs.gitlab.com/ee/user/group/settings/group_access_tokens) and provide it as `GITLAB_TOKEN` as env variable.
 
+## Enabling Frontend Plugin
+
+Add the plugin to your app's feature list in `packages/app/src/App.tsx`:
+
+```typescript
+import { createApp } from '@backstage/frontend-defaults';
+import { releaseNotesPlugin } from '@stefank13/backstage-plugin-release-notes';
+
+const app = createApp({
+  features: [
+    // ... other plugins
+    releaseNotesPlugin,
+  ],
+});
+
+export default app.createRoot();
+```
+
 ## Enabling Release Notes for a component
 
-1. Import and add `EntityReleaseNotesContent` to `packages/app/src/components/catalog/EntityPage.tsx` for all the entity pages you want the Release Notes to be in:
+Once the frontend plugin is enabled, the Release Notes tab is displayed by default for entities of the following kinds: Component, Resource, and API.
 
-   ```typescript jsx
-   import { EntityReleaseNotesContent } from '@stefank13/backstage-plugin-release-notes';
+## Using the Release Notes card in your Backstage frontend
 
-   //...
+The `ReleaseNotesCard` component can be added to any React page in your Backstage frontend.
 
-   const serviceEntityPage = (
-     <EntityLayout>
-       //...
-       <EntityLayout.Route path="/release-notes" title="Release Notes">
-         <EntityReleaseNotesContent />
-       </EntityLayout.Route>
-       //...
-     </EntityLayout>
-   );
+### Configure the Release Notes card
 
-   const websiteEntityPage = (
-     <EntityLayout>
-       //...
-       <EntityLayout.Route path="/release-notes" title="Release Notes">
-         <EntityReleaseNotesContent />
-       </EntityLayout.Route>
-       //...
-     </EntityLayout>
-   );
+The component requires the following props:
 
-   const defaultEntityPage = (
-     <EntityLayout>
-       //...
-       <EntityLayout.Route path="/release-notes" title="Release Notes">
-         <EntityReleaseNotesContent />
-       </EntityLayout.Route>
-       //...
-     </EntityLayout>
-   );
-   ```
+- `projectSlug` – The slug of the Git repository that contains your Backstage instance.
+- `title` – The title displayed at the top of the card.
 
-2. Add the following annotation to the `catalog-info.yaml` for an entity you want to show the Release Notes for:
+For example, if your Backstage instance is called **Dev Central**, you could use:
 
-   ```yaml
-   metadata:
-     annotations:
-       gitlab.com/project-slug: 'project-slug' #group_name/project_name
-   ```
+- `projectSlug`: `developer-portal/dev-central`
+- `title`: `Dev Central Releases`
 
-## Enabling Release Notes for your Backstage instance on the homepage
+### Add the card to your page
 
-1. Before you can add the Release Notes card for the homepage, make sure you have configured the homepage. You can read how to do that [here](https://backstage.io/docs/getting-started/homepage/).
+Import `ReleaseNotesCard` and render it wherever you want it to appear.
 
-2. When the homepage is configured, it's time to enable the `HomePageReleaseNotesCard`, this component expects the following 2 props:
+```tsx
+import { ReleaseNotesCard } from '@stefank13/backstage-plugin-release-notes';
 
-   - `projectSlug`: This is the slug of your backstage instance git project.
-   - `title`: This is the title of the card.
+// ...
 
-   For example, if your Backstage instance is called Dev Central, the props can have the following values:
+<Grid item xs={12} md={6}>
+  <ReleaseNotesCard
+    projectSlug="developer-portal/dev-central"
+    title="Dev Central Releases"
+  />
+</Grid>;
+```
 
-   - `projectSlug`: developer-portal/dev-central
-   - `title`: Dev Central Releases
+For example, you can add the card to a custom page alongside other components:
 
-3. Import and add `HomePageReleaseNotesCard` to `packages/app/src/components/home/HomePage.tsx`. The `HomePageReleaseNotesCard` e:
+```tsx
+<Grid container item xs={12}>
+  <Grid item xs={12} md={6}>
+    <ReleaseNotesCard
+      projectSlug="developer-portal/dev-central"
+      title="Dev Central Releases"
+    />
+  </Grid>
 
-   ```typescript jsx
-   import { HomePageReleaseNotesCard } from '@stefank13/backstage-plugin-release-notes';
+  <Grid item xs={12} md={6}>
+    <HomePageStarredEntities />
+  </Grid>
+</Grid>
+```
 
-   //...
-
-   export const HomePage = () => {
-     <SearchContextProvider>
-       <Page themeId="home">
-         //...
-         <Grid item xs={12} md={6}>
-           <HomePageReleaseNotesCard
-             projectSlug="developer-portal/dev-central"
-             title="Dev Central Releases"
-           />
-         </Grid>
-         //...
-       </Page>
-     </SearchContextProvider>;
-   };
-   ```
+The card will display the latest releases for the configured repository.

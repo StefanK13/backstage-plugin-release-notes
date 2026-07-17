@@ -1,33 +1,15 @@
-/*
- * Copyright 2021 The Backstage Authors
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *     http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-
+import { HomePageLayoutBlueprint } from '@backstage/plugin-home-react/alpha';
+import { Content, Page } from '@backstage/core-components';
+import { createFrontendModule } from '@backstage/frontend-plugin-api';
 import {
-  HomePageToolkit,
   HomePageCompanyLogo,
   HomePageStarredEntities,
   TemplateBackstageLogo,
-  TemplateBackstageLogoIcon,
 } from '@backstage/plugin-home';
-import { Content, Page } from '@backstage/core-components';
 import { HomePageSearchBar } from '@backstage/plugin-search';
 import { SearchContextProvider } from '@backstage/plugin-search-react';
 import { Grid, makeStyles } from '@material-ui/core';
-import { HomePageReleaseNotesCard } from '@stefank13/backstage-plugin-release-notes';
-import { HomePageRecentlyVisited } from '@backstage/plugin-home';
-import React from 'react';
+import { ReleaseNotesCard } from '@stefank13/backstage-plugin-release-notes';
 
 const useStyles = makeStyles(theme => ({
   searchBarInput: {
@@ -55,56 +37,54 @@ const useLogoStyles = makeStyles(theme => ({
   },
 }));
 
-export const HomePage = () => {
-  const classes = useStyles();
-  const { svg, path, container } = useLogoStyles();
+export const myHomePageLayout = HomePageLayoutBlueprint.make({
+  params: {
+    loader: async () =>
+      function MyHomePageLayout() {
+        const classes = useStyles();
+        const { svg, path, container } = useLogoStyles();
 
-  return (
-    <SearchContextProvider>
-      <Page themeId="home">
-        <Content>
-          <Grid container justifyContent="center" spacing={6}>
-            <HomePageCompanyLogo
-              className={container}
-              logo={<TemplateBackstageLogo classes={{ svg, path }} />}
-            />
-            <Grid container item xs={12} justifyContent="center">
-              <HomePageSearchBar
-                InputProps={{
-                  classes: {
-                    root: classes.searchBarInput,
-                    notchedOutline: classes.searchBarOutline,
-                  },
-                }}
-                placeholder="Search"
-              />
-            </Grid>
-            <Grid container item xs={12}>
-              <Grid item xs={12} md={6}>
-                <HomePageReleaseNotesCard
-                  projectSlug="vodafoneziggodi/cockpit/cockpit"
-                  title="Backstage Instance Releases"
-                />
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <HomePageStarredEntities />
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <HomePageRecentlyVisited />
-              </Grid>
-              <Grid item xs={12} md={6}>
-                <HomePageToolkit
-                  tools={Array(8).fill({
-                    url: '#',
-                    label: 'link',
-                    icon: <TemplateBackstageLogoIcon />,
-                  })}
-                />
-              </Grid>
-            </Grid>
-          </Grid>
-        </Content>
-      </Page>
-    </SearchContextProvider>
-  );
-};
+        return (
+          <SearchContextProvider>
+            <Page themeId="home">
+              <Content>
+                <Grid container justifyContent="center" spacing={6}>
+                  <HomePageCompanyLogo
+                    className={container}
+                    logo={<TemplateBackstageLogo classes={{ svg, path }} />}
+                  />
+                  <Grid container item xs={12} justifyContent="center">
+                    <HomePageSearchBar
+                      InputProps={{
+                        classes: {
+                          root: classes.searchBarInput,
+                          notchedOutline: classes.searchBarOutline,
+                        },
+                      }}
+                      placeholder="Search"
+                    />
+                  </Grid>
+                  <Grid container item xs={12}>
+                    <Grid item xs={12} md={6}>
+                      <ReleaseNotesCard
+                        projectSlug="vodafoneziggodi/cockpit/cockpit"
+                        title="Backstage Instance Releases"
+                      />
+                    </Grid>
+                    <Grid item xs={12} md={6}>
+                      <HomePageStarredEntities />
+                    </Grid>
+                  </Grid>
+                </Grid>
+              </Content>
+            </Page>
+          </SearchContextProvider>
+        );
+      },
+  },
+});
+
+export const homeModule = createFrontendModule({
+  pluginId: 'home',
+  extensions: [myHomePageLayout],
+});
