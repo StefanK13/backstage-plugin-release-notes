@@ -1,8 +1,5 @@
-import {
-  createApiRef,
-  DiscoveryApi,
-  FetchApi,
-} from '@backstage/core-plugin-api';
+import { DiscoveryApi, FetchApi } from '@backstage/core-plugin-api';
+import { createApiRef } from '@backstage/frontend-plugin-api';
 import { ResponseError } from '@backstage/errors';
 
 export type Release = {
@@ -24,8 +21,9 @@ export interface ReleaseNotesApi {
   ) => Promise<ListReleasesResponse>;
 }
 
-export const releaseNotesApiRef = createApiRef<ReleaseNotesApi>({
+export const releaseNotesApiRef = createApiRef<ReleaseNotesApi>().with({
   id: 'plugin.release-notes.service',
+  pluginId: 'release-notes',
 });
 
 export class ReleaseNotesClient implements ReleaseNotesApi {
