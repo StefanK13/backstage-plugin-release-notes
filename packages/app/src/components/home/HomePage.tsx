@@ -1,4 +1,4 @@
-import { HomePageLayoutBlueprint } from '@backstage/plugin-home-react';
+import { HomePageLayoutBlueprint } from '@backstage/plugin-home-react/alpha';
 import { Content, Page } from '@backstage/core-components';
 import { createFrontendModule } from '@backstage/frontend-plugin-api';
 import {

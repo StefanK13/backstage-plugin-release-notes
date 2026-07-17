@@ -14,8 +14,9 @@ import { SignInPage } from '@backstage/core-components';
 
 const signInPage = SignInPageBlueprint.make({
   params: {
-    loader: async () => props =>
-      <SignInPage {...props} providers={['guest']} />,
+    loader: async () => props => (
+      <SignInPage {...props} providers={['guest']} />
+    ),
   },
 });
 
